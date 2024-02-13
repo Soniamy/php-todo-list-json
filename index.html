@@ -14,15 +14,52 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <!-- font-awesome icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <link rel="stylesheet" href="./style.css" />
     <title>PHP ToDo List JSON</title>
   </head>
   <body>
     <div id="app">
       <h1>TO do List</h1>
-      <ul>
-        <li v-for="(task, index) in listTasks" :key="index">{{task.text}}</li>
-      </ul>
+      <div class="ins-data">
+        <form @submit="addTask">
+          <input
+            v-model.trim="newTask"
+            type="text"
+            placeholder="Nuovo Promemoria"
+          />
+          <button>Aggiungi</button>
+        </form>
+      </div>
+
+      <div class="container">
+        <h2 v-if="listTasks.length === 0">
+          Non ci sono promemoria in lista &#128521;
+        </h2>
+
+        <ul v-else class="list">
+          <li
+            v-for="(task, index) in listTasks"
+            :key="index"
+            :class="{'check' : task.check}"
+            @click="task.check = !task.check"
+          >
+            <span>{{task.text}}</span>
+            <i
+              @click.stop="remtsk(index)"
+              class="fa-solid fa-trash fa-beat"
+            ></i>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- CDN VueJs -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
